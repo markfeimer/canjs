@@ -304,6 +304,7 @@ steal('can/util', 'can/util/string', 'can/util/object', function (can) {
 				$fixture(url, fixture);
 			});
 		}
+		return fixture;
 	};
 	var replacer = can.replacer;
 
@@ -955,5 +956,7 @@ steal('can/util', 'can/util/string', 'can/util/object', function (can) {
 	//Expose this for fixture debugging
 	can.fixture.overwrites = overwrites;
 	can.fixture.make = can.fixture.store;
-	return can.fixture;
+	// return can.fixture;
+	// return store;
+	return $fixture;
 });
