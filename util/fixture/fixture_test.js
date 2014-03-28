@@ -291,6 +291,31 @@ steal('can/util/fixture', 'can/model', 'can/test', function () {
 					});
 			});
 	});
+	test('restoring an old fixture', function () {
+		var url = can.test.path('util/fixture/fixtures/remove.json');
+		var oldFixture = can.fixture('GET ' + url, function () {
+			return {
+				weird: 'ness!'
+			};
+		});
+		stop();
+		console.debug('our old fixture: ', oldFixture);
+		can.fixture('GET ' + url, function () {
+			return {
+				weird: 'ness?'
+			};
+		});
+		can.fixture('GET ' + url, oldFixture);
+		
+		can.ajax({
+			url: url,
+			dataType: 'json'
+		})
+			.done(function (json) {
+				equal(json.weird, 'ness!', 'old fixture has been restored correctly');
+				start();
+			});
+	});
 	/*
 	 removed test, makes phantom js build fail. does not fail browser tests. Opened issue #408 to track, for milestone 1.2
 	 //TODO re-enable test and determine why it fails in phantom but not in real browser. https://github.com/bitovi/canjs/issues/408
